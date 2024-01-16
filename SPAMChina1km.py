@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import rioxarray as rxr
 import geopandas as gpd
 import pandas as pd
@@ -35,8 +36,8 @@ def production_history_cal_upsample(dir_distribution,target,production,shp,targe
     
     prod = production[production['Crop (full)'] == target]
 
-    raster_dir = glob.glob(dir_distribution +'clip_{0}_*'.format(Province)+prod['Name (code)'].values[0].upper()+'_A.tif')[0]  
-
+    raster_dir = glob.glob(dir_distribution +'/clip_{0}_*'.format(Province)+prod['Name (code)'].values[0].upper()+'_A.tif')[0]
+     
     raster_before = rxr.open_rasterio(raster_dir)
     
     raster_UP = Resampling_(raster_before,upscale_factor)
@@ -209,9 +210,9 @@ if __name__ == "__main__":
     CropCHN = Production[Production['Crop (full)'] == Crop]['Name in raw data'].values[0]
 
     Crop_prod2010 = Plot_dataset(dataset = ds_dis,region = Region,crop = CropCHN,year = 2010)
-    Crop_prod2010.savefig(dir_prod2010+'{0}{1}2010年产量.png'.format(Region['省'].values[0],CropCHN),  dpi=330, bbox_inches='tight')
+    Crop_prod2010.savefig(dir_prod2010+'/{0}{1}2010年产量.png'.format(Region['省'].values[0],CropCHN),  dpi=330, bbox_inches='tight')
 
     Crop_prodY = Plot_dataset(dataset = ds_prod,region = Region,crop = CropCHN,year = 2020)
-    Crop_prodY.savefig(dir_prodT+'{0}{1}{2}年产量.png'.format(Province.split("省")[0],CropCHN,Year),  dpi=300, bbox_inches='tight')
+    Crop_prodY.savefig(dir_prodT+'/{0}{1}{2}年产量.png'.format(Province.split("省")[0],CropCHN,Year),  dpi=300, bbox_inches='tight')
 
     plt.close("all")

@@ -19,7 +19,7 @@ config["directories"] = {
 }
 
 config["regions"] = {
-    "province": "辽宁省"
+    "province": "云南省"
 }
 
 config["crops"] = {
