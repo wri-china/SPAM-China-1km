@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import rioxarray as rxr
 import geopandas as gpd
 import pandas as pd
@@ -35,8 +36,8 @@ def production_history_cal_upsample(dir_distribution,target,production,shp,targe
     
     prod = production[production['Crop (full)'] == target]
 
-    raster_dir = glob.glob(dir_distribution +'clip_{0}_*'.format(Province)+prod['Name (code)'].values[0].upper()+'_A.tif')[0]  
-
+    raster_dir = glob.glob(dir_distribution +'/clip_{0}_*'.format(Province)+prod['Name (code)'].values[0].upper()+'_A.tif')[0]
+     
     raster_before = rxr.open_rasterio(raster_dir)
     
     raster_UP = Resampling_(raster_before,upscale_factor)
@@ -114,21 +115,24 @@ if __name__ == "__main__":
     *_R	rainfed portion of crop (= A - I, or H + L + S)
     """
 
-    # 内部输入
-    dir_distribution = config.get("directories", "dir_distribution")
+     # Set the directory for output
     dir_output = config.get("directories", "dir_output")
+    for i in ['Prod_2010', 'Prod_{0}'.format(Year)]:
+        output_directory = os.path.join(dir_output, i)
+        os.makedirs(output_directory, exist_ok=True)
+    dir_prod2010 = os.path.join(dir_output, 'Prod_2010')
+    dir_prodT = os.path.join(dir_output, 'Prod_{0}'.format(Year))
 
-    dir_input = config.get("directories", "dir_input")
-    os.chdir(dir_input)
-    dir_global = config.get("directories", "dir_global")
-
-    China = gpd.read_file('China_province.shp',encoding = 'utf-8')
+    dir_shp = config.get("directories", "dir_provshp")
+    China = gpd.read_file(os.path.join(dir_shp,'China_province.shp'),encoding = 'utf-8')
     Region = China[China['省'] == Province]
     minx,miny,maxx,maxy = Region.bounds.values[0]
 
-    Production = pd.read_excel('Annual price for crops.xlsx',"Production_"+Province)
+    dir_prodxls = config.get("directories", "dir_prodxls")
+    Production = pd.read_excel(os.path.join(dir_shp,'Annual price for crops.xlsx'),"Production_"+Province)
     CropName = Production[Production['Crop (full)'] == Crop]['Name (code)'].values[0].upper()
 
+    dir_global = config.get("directories", "dir_prodtif")
     # Get the production of the crop in 2010
     Prod_A = glob.glob(os.path.join(dir_global, '*_{0}_A.tif'.format(CropName)))
     da_A = rxr.open_rasterio(Prod_A[0])
@@ -138,7 +142,7 @@ if __name__ == "__main__":
 
     da_A_Env = da_A.where((da_A.x > minx-2*resx)&(da_A.x<maxx+2*resx)&(da_A.y>miny-2*resy)&(da_A.y<maxy+2*resy),drop=True)
     # Export the production of 2010 to the dir_distribution
-    da_A_Env.rio.to_raster(dir_distribution+'/clip_{0}_'.format(Province)+os.path.basename(Prod_A[0]))
+    da_A_Env.rio.to_raster(dir_prod2010+'/clip_{0}_'.format(Province)+os.path.basename(Prod_A[0]))
     da_A_Clip = da_A_Env.squeeze().rio.clip(Region.geometry.values, Region.crs)
     dis_A = xr.DataArray(da_A_Clip)
     ds_dis = xr.Dataset()
@@ -146,7 +150,7 @@ if __name__ == "__main__":
 
     # Get the production of the crop in 2020
     Prod_TargetYear_UP = production_history_cal_upsample(
-        dir_distribution = dir_distribution,
+        dir_distribution = dir_prod2010,
         target = Crop,
         production = Production,
         shp = Region,
@@ -154,8 +158,8 @@ if __name__ == "__main__":
         upscale_factor = 10)
 
     prod_A_10 = xr.DataArray(Prod_TargetYear_UP.squeeze())
-    # Export the production of 2010 to the dir_output
-    prod_A_10.rio.to_raster(dir_output+'/P_A_{0}_{1}_{2}_'.format(Province, Crop,Year)+os.path.basename(Prod_A[0]))
+    # Export the production of 2010 to the dir_prodT
+    prod_A_10.rio.to_raster(dir_prodT+'/P_A_{0}_{1}_{2}_'.format(Province, Crop,Year)+os.path.basename(Prod_A[0]))
     ds_prod = xr.Dataset()
     ds_prod.update({'A': prod_A_10})
 
@@ -170,7 +174,7 @@ if __name__ == "__main__":
 
         dataTechEnv = data_tech.where((data_tech.x > minx-2*resx)&(data_tech.x<maxx+2*resx)&(data_tech.y>miny-2*resy)&(data_tech.y<maxy+2*resy),drop=True)
 
-        dataTechEnv.rio.to_raster(dir_distribution+'/clip_{0}_'.format(Province)+os.path.basename(Prod_dis_tech[0]))
+        dataTechEnv.rio.to_raster(dir_prod2010+'/clip_{0}_'.format(Province)+os.path.basename(Prod_dis_tech[0]))
 
         # first, clip as the distribution of 2010 and add it to the dataset
         dis_tech = dataTechEnv.squeeze().rio.clip(Region.geometry.values, Region.crs)
@@ -186,7 +190,7 @@ if __name__ == "__main__":
         P_tech = prod_A_10 * dis_tech_ratio_clip
         prod_tech = xr.DataArray(P_tech.squeeze())
         # prod_tech = prod_tech.where(prod_tech < prod_tech.max())
-        prod_tech.rio.to_raster(dir_output+'/P_{0}_{1}_{2}_{3}_'.format(tech,Province, Crop,Year)+os.path.basename(Prod_dis_tech[0]))
+        prod_tech.rio.to_raster(dir_prodT+'/P_{0}_{1}_{2}_{3}_'.format(tech,Province, Crop,Year)+os.path.basename(Prod_dis_tech[0]))
 
         ds_prod.update({'{0}'.format(tech): prod_tech})
 
@@ -206,9 +210,9 @@ if __name__ == "__main__":
     CropCHN = Production[Production['Crop (full)'] == Crop]['Name in raw data'].values[0]
 
     Crop_prod2010 = Plot_dataset(dataset = ds_dis,region = Region,crop = CropCHN,year = 2010)
-    Crop_prod2010.savefig(dir_distribution+'{0}{1}2010年产量.png'.format(Region['省'].values[0],CropCHN),  dpi=330, bbox_inches='tight')
+    Crop_prod2010.savefig(dir_prod2010+'/{0}{1}2010年产量.png'.format(Region['省'].values[0],CropCHN),  dpi=330, bbox_inches='tight')
 
     Crop_prodY = Plot_dataset(dataset = ds_prod,region = Region,crop = CropCHN,year = 2020)
-    Crop_prodY.savefig(dir_output+'{0}{1}{2}年产量.png'.format(Province.split("省")[0],CropCHN,Year),  dpi=300, bbox_inches='tight')
+    Crop_prodY.savefig(dir_prodT+'/{0}{1}{2}年产量.png'.format(Province.split("省")[0],CropCHN,Year),  dpi=300, bbox_inches='tight')
 
     plt.close("all")
