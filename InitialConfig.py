@@ -5,10 +5,17 @@ config = configparser.ConfigParser()
 
 # Add sections and options with values
 config["directories"] = {
-    "dir_input": "E:/研究生_个人/WRI/SPAM_data",
-    "dir_distribution": "E:/研究生_个人/WRI/SPAM_data/OutPut/History/",
-    "dir_output": "E:/研究生_个人/WRI/SPAM_data/OutPut/Tiff/",
-    "dir_global": "./spam2010v2r0_global_prod.geotiff"
+    # Directory for province shapefiles
+    "dir_provshp": "E:/研究生_个人/WRI/SPAM_data",
+    
+    # Directory for SPAM GeoTIFF files
+    "dir_prodtif": "E:/研究生_个人/WRI/SPAM_data/spam2010v2r0_global_prod.geotiff",
+    
+    # Directory for production Excel files
+    "dir_prodxls": "E:/研究生_个人/WRI/SPAM_data",
+    
+    # Output directory
+    "dir_output": "E:/研究生_个人/WRI/SPAM_data/OutPut/",
 }
 
 config["regions"] = {
