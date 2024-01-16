@@ -129,7 +129,7 @@ if __name__ == "__main__":
     minx,miny,maxx,maxy = Region.bounds.values[0]
 
     dir_prodxls = config.get("directories", "dir_prodxls")
-    Production = pd.read_excel(os.path.join(dir_shp,'Annual price for crops.xlsx'),"Production_"+Province)
+    Production = pd.read_excel(os.path.join(dir_prodxls,'Annual_price_for_crops_new.xlsx'),"Production_"+Province)
     CropName = Production[Production['Crop (full)'] == Crop]['Name (code)'].values[0].upper()
 
     dir_global = config.get("directories", "dir_prodtif")
@@ -164,6 +164,7 @@ if __name__ == "__main__":
     ds_prod.update({'A': prod_A_10})
 
     tech_List = ['I', 'H', 'L', 'S', 'R']
+    
     for tech in tech_List:
 
         Prod_dis_tech = glob.glob(os.path.join(dir_global, '*_{0}_{1}.tif'.format(CropName, tech)))

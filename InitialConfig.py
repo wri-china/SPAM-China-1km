@@ -6,16 +6,16 @@ config = configparser.ConfigParser()
 # Add sections and options with values
 config["directories"] = {
     # Directory for province shapefiles
-    "dir_provshp": "E:/研究生_个人/WRI/SPAM_data",
+    "dir_provshp": "./shp/",
     
     # Directory for SPAM GeoTIFF files
-    "dir_prodtif": "E:/研究生_个人/WRI/SPAM_data/spam2010v2r0_global_prod.geotiff",
+    "dir_prodtif": "C:/Users/Yuchen.Guo/OneDrive/WRI/project/RiskImpact/spam2010v2r0_global_prod.geotiff/",
     
     # Directory for production Excel files
-    "dir_prodxls": "E:/研究生_个人/WRI/SPAM_data",
+    "dir_prodxls": "./excel/",
     
     # Output directory
-    "dir_output": "E:/研究生_个人/WRI/SPAM_data/OutPut/",
+    "dir_output": "./out/",
 }
 
 config["regions"] = {
@@ -27,7 +27,7 @@ config["crops"] = {
 }
 
 config["years"] = {
-    "target_year": "2020"
+    "target_year": "2015"
 }
 
 # Save the configuration to a file
