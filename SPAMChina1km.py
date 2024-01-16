@@ -26,16 +26,19 @@ def Resampling_(raster,upscale_factor = 10):
         shape = (new_height, new_width),
         resampling = Resampling.bilinear,
     )
-
+    #print(raster.values[(raster.values>=0)&(raster.values<=9999999.)].sum())
+    
+    
     raster_upsampled.values[(raster_upsampled.values>=0)&(raster_upsampled.values<=9999999.)] = raster.values[(raster.values>=0)&(raster.values<=9999999.)].sum()*raster_upsampled.values[(raster_upsampled.values>=0)&(raster_upsampled.values<=9999999.)]/raster_upsampled.values[(raster_upsampled.values>=0)&(raster_upsampled.values<=9999999.)].sum()
     
-
+    #print(raster_upsampled.values[(raster_upsampled.values>=0)&(raster_upsampled.values<=9999999.)].sum())
+    
     return raster_upsampled
 
 def production_history_cal_upsample(dir_distribution,target,production,shp,target_year,upscale_factor=10):
     
     prod = production[production['Crop (full)'] == target]
-
+    
     raster_dir = glob.glob(dir_distribution +'/clip_{0}_*'.format(Province)+prod['Name (code)'].values[0].upper()+'_A.tif')[0]
      
     raster_before = rxr.open_rasterio(raster_dir)
@@ -48,13 +51,18 @@ def production_history_cal_upsample(dir_distribution,target,production,shp,targe
     ######## calibrate dataset base on https://data.stats.gov.cn/easyquery.htm?cn=C01
     overall = prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))].sum()
     
-    prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))] = (prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))]/overall)*prod[2010].values*10000
+    basevalue = prod[2010].values
+    
+    prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))] = (prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))]/overall)*basevalue*10000
 
     # migrating through the years
-    Ratio = prod[target_year].values/prod[2010].values
-    prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))] = prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))]*Ratio
+    Ratio = prod[target_year].values/basevalue
 
-    return prodUP
+    prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))] = prodUP.values[np.where((prodUP.values>=0)&(prodUP.values<=9999999.))]*Ratio
+    
+    status = pd.isna(prodUP.values[0].max())
+
+    return prodUP,status
 
 def Plot_dataset(dataset,region,crop,year = 2010):
     # https://docs.xarray.dev/en/stable/generated/xarray.plot.imshow.html
@@ -65,7 +73,7 @@ def Plot_dataset(dataset,region,crop,year = 2010):
     fig.subplots_adjust(wspace=0.01, hspace=0.3)
     minx,miny,maxx,maxy = Region.bounds.values[0]
     var_names = list(dataset.data_vars.keys())
-    print(var_names)
+    #print(var_names)
 
     k = 0
     for i in range(0,2):
@@ -149,13 +157,15 @@ if __name__ == "__main__":
     ds_dis.update({'A': dis_A})
 
     # Get the production of the crop in 2020
-    Prod_TargetYear_UP = production_history_cal_upsample(
+    Prod_TargetYear_UP,status = production_history_cal_upsample(
         dir_distribution = dir_prod2010,
         target = Crop,
         production = Production,
         shp = Region,
         target_year = Year,
         upscale_factor = 10)
+    
+    print(status,"False means the data valid, True means the data invalid")
 
     prod_A_10 = xr.DataArray(Prod_TargetYear_UP.squeeze())
     # Export the production of 2010 to the dir_prodT
