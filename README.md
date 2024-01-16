@@ -22,7 +22,7 @@ balabala
 ### Directory Structure
 - `excel`: Folder to store Excel files.
 - `out`: Output folder for results.
-- `shp`: Contains `SPAMChina1km` shapefiles for mapping.
+- `shp`: Contains `SPAMChina1km` shapefiles for cliping study area.
 
 ### Crop Types and Technologies
 The script categorizes crop production based on different technologies:
