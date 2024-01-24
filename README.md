@@ -21,9 +21,12 @@ The specific formulas are as follows:
 
 ![equation](https://latex.codecogs.com/svg.latex?\text{SPAM}_{\text{Year}_{\text{yunnan}}}=\frac{NBS_{\text{Year}}\times\text{SPAM2010}_{\text{yunnan}}}{NBS_{2010}})
 
-Interpolation: it refers to up-sampling from 10km resolution to 1km resolution (Appendix IV)   
+Interpolation: it refers to up-sampling from 10km resolution to 1km resolution
+
 Clip: it refers to clipping the area of Yunnan from origin SPAM data by using Yunnan province’s boundary 
+
 Sum: it refers to accumulation of all the pixel value in SPAM 2010 in region of Yunnan
+
 NBS{Year}: it refers to the total agriculture production in Yunnan for the year {Year} according to the standards of the National Bureau of Statistics.
 
 ## Usage Instructions
