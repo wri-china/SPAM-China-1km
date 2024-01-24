@@ -10,7 +10,11 @@ This script generates the distribution of crop production at the provincial leve
 
 ## Methodology
 
-balabala
+we combine SPAM with production values from the National Bureau of Statistics to generate wanted production distribution.
+There are 2 steps contianing in the methodology:
+1. Upsampling: The original crop production dataset's spatial resolution is around 10km, we used binlinear interplilation to up sample the dataset, increaseing the spatial resolution from 10km to 1km,This interpllation method ensures that the total production is consistent with official statistics, and the value of each pixel at the original resolution  is the same as the total value within the range of the original pixel resolution after scaling.However, since it is scaled based on a mathematical algorithm and does not take into account the actual distribution of crop production at a 1km resolution, there is a discrepancy between the scaled results and the actual observations.
+![sample](./meth1.png)
+
 
 ## Usage Instructions
 
