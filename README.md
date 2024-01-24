@@ -1,4 +1,4 @@
-# SPAM-China-1km
+# SPAM-China-1km-Production
 
 ## Overview
 This script generates the distribution of crop production at the provincial level in China from 2010 to 2022. It currently covers 17 types of crops, with plans to expand in the future. The script provides detailed information on crop production distribution based on various irrigation technologies.
@@ -29,7 +29,7 @@ There are 2 steps contianing in the methodology:
 
 		NBS{Year}: it refers to the total agriculture production in Yunnan for the year {Year} according to the standards of the National Bureau of Statistics.
 
-for the different techologies, we first caculate the ratio of 2010, and we use this ratio to map on the results of the future years
+For the different techologies's productions, we first caculate the ratio of 2010, and we use this ratio to map on the results of the future years
 
 ## Usage Instructions
 
