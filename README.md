@@ -15,7 +15,7 @@ There are 2 steps contianing in the methodology:
 1. Upsampling: The original crop production dataset's spatial resolution is around 10km, we used binlinear interplilation to up sample the dataset, increaseing the spatial resolution from 10km to 1km,This interpllation method ensures that the total production is consistent with official statistics, and the value of each pixel at the original resolution  is the same as the total value within the range of the original pixel resolution after scaling.However, since it is scaled based on a mathematical algorithm and does not take into account the actual distribution of crop production at a 1km resolution, there is a discrepancy between the scaled results and the actual observations.
 ![sample](./meth1.png)
 2. Calibration: For crop production from 2011 to 2020, we used the 2010 crop production distribution in Yunnan as a baseline and scaled the corresponding crop production data from 2010 to 2020, based on data from the [National Bureau of Statistics](https://data.stats.gov.cn/easyquery.htm?cn=C01). The specific formulas are as follows:
-![equation](https://latex.codecogs.com/svg.latex?\mathrm{SPAM2010\_yunnan~}=\frac{NBS_{2010}\times%20I_{nterpolation}\left(C_{lip}(SPAM_{2010})\right)}{S_{um}(C_{lip}(SPAM_{2010}))})
+![equation](https://latex.codecogs.com/svg.latex?\mathrm{SPAM2010\yunnan~}=\frac{NBS_{2010}\times%20I_{nterpolation}\left(C_{lip}(SPAM_{2010})\right)}{S_{um}(C_{lip}(SPAM_{2010}))})
 
 ## Usage Instructions
 
