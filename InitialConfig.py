@@ -22,20 +22,7 @@ config["directories"] = {
 """
 province can be selected
 
-['云南省','北京市','天津市','河北省',
- '山西省', '内蒙古自治区','辽宁省',
- '吉林省', '黑龙江省','上海市',
- '江苏省', '浙江省','安徽省',
- '福建省', '江西省','山东省',
- '河南省', '湖北省','湖南省',
- '广东省', '广西壮族自治区','海南省',
- '重庆市', '四川省','贵州省',
- '西藏自治区', '陕西省', '甘肃省', '青海省',
- '宁夏回族自治区', '新疆维吾尔自治区']
 """
-config["regions"] = {
-    "province": "北京市"
-}
 
 """
 Crops can be selectd:
@@ -59,7 +46,7 @@ Crops can be selectd:
 
 """
 config["crops"] = {
-    "crop": "sunflower"
+    "crop": "wheat"
 }
 
 """
@@ -69,9 +56,61 @@ Years can be selectd: from 2010 to 2022
 """
 
 config["years"] = {
-    "target_year": "2015"
+    "target_year": "2020"
 }
+
+"""
+['云南省','北京市','天津市','河北省',
+ '山西省', '内蒙古自治区','辽宁省',
+ '吉林省', '黑龙江省','上海市',
+ '江苏省', '浙江省','安徽省',
+ '福建省', '江西省','山东省',
+ '河南省', '湖北省','湖南省',
+ '广东省', '广西壮族自治区','海南省',
+ '重庆市', '四川省','贵州省',
+ '西藏自治区', '陕西省', '甘肃省', '青海省',
+ '宁夏回族自治区', '新疆维吾尔自治区']
+
+"""
+
+config["regions"] = {
+    "province": '云南省'
+}
+
 
 # Save the configuration to a file
 with open("config.ini", "w") as configfile:
-    config.write(configfile)
+     config.write(configfile)
+"""
+province = ['云南省','北京市','天津市','河北省',
+ '山西省', '内蒙古自治区','辽宁省',
+ '吉林省', '黑龙江省','上海市',
+ '江苏省', '浙江省','安徽省',
+ '福建省', '江西省','山东省',
+ '河南省', '湖北省','湖南省',
+ '广东省', '广西壮族自治区','海南省',
+ '重庆市', '四川省','贵州省',
+ '西藏自治区', '陕西省', '甘肃省', '青海省',
+ '宁夏回族自治区', '新疆维吾尔自治区']
+
+import subprocess
+import time
+
+for pp in province:
+    
+    config["regions"] = {
+        "province": pp
+    }
+
+    # Save the configuration to a file
+    with open("config.ini", "w") as configfile:
+        config.write(configfile)
+    
+    # Define the path to your script
+    script_path = 'SPAMChina1km.py'
+
+    # Run the script
+    process = subprocess.Popen(['python', script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    time.sleep(3) 
+"""    
+    

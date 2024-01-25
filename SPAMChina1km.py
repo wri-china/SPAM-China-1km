@@ -223,7 +223,7 @@ if __name__ == "__main__":
     Crop_prod2010 = Plot_dataset(dataset = ds_dis,region = Region,crop = CropCHN,year = 2010)
     Crop_prod2010.savefig(dir_prod2010+'/{0}{1}2010年产量.png'.format(Region['省'].values[0],CropCHN),  dpi=330, bbox_inches='tight')
 
-    Crop_prodY = Plot_dataset(dataset = ds_prod,region = Region,crop = CropCHN,year = 2020)
-    Crop_prodY.savefig(dir_prodT+'/{0}{1}{2}年产量.png'.format(Province.split("省")[0],CropCHN,Year),  dpi=300, bbox_inches='tight')
+    Crop_prodY = Plot_dataset(dataset = ds_prod,region = Region,crop = CropCHN,year = Year)
+    Crop_prodY.savefig(dir_prodT+'/{0}{1}{2}年产量.png'.format(Province.split("省")[0],CropCHN,Year),  dpi=330, bbox_inches='tight')
 
     plt.close("all")

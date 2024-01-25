@@ -1,7 +1,7 @@
 # SPAM-China-1km-Production
 
 ## Overview
-This script generates the distribution of crop production at the provincial level in China from 2010 to 2022. It currently covers 17 types of crops, with plans to expand in the future. The script provides detailed information on crop production distribution based on various irrigation technologies.
+This project generates the distribution of crop production at the provincial level in China from 2010 to 2022. It currently covers 17 types of crops, with plans to expand in the future. The final output provides detailed crop distribution based on various irrigation technologies.you can check the detail script through [github](https://github.com/wri-china/SPAM-China-1km) 
 
 ## Key Features
 - **Historical Data Analysis:** Covers crop distribution data from 2010 to 2022.
@@ -33,17 +33,22 @@ For the different techologies's productions, we first caculate the ratio of 2010
 
 ## Usage Instructions
 
-### Initial Setup
 1. **Configuration with `InitialConfig.py`:**
    - This module helps you generate the `config.ini` file.
-   - Set up the directory, region, crop type, and target year to get the final `config.ini`.
+   - You should change the dirctory based on what you need. 
+   - After you modified the dirctory,crop type, province, year and run `InitialConfig.py`, you will get the required `config.ini`  
 
-### Directory Structure
-- `excel`: Folder to store Excel files.
-- `out`: Output folder for results.
-- `shp`: Contains `SPAMChina1km` shapefiles for cliping study area.
+2. **Run `SPAMChina.py`:**
+   - with target `config.ini`, you can run `SPAMChina.py`. you will get all target crops in the target province during the target year under six types of irrigation techniques
 
-### Crop Types and Technologies
+## Directory Structure
+- `excel`: Folder to store Excel files. you can change through "dir_prodxls": "./excel/" in `InitialConfig.py`
+- `out`: Output folder for results.you can change through  "dir_output": "./out/" in `InitialConfig.py`
+- `shp`: Contains `SPAMChina1km` shapefiles for cliping study area. you can change through  "dir_provshp": "./shp/" in `InitialConfig.py`
+- `data`: Contains `SPAM` data, you can download from .you can change through  "dir_prodtif": "./data/spam2010v2r0_global_prod.geotiff/" in `InitialConfig.py`
+
+
+## Crop Types and Technologies
 The script categorizes crop production based on different technologies:
 - `*_A`: All technologies together (complete crop).
 - `*_I`: Irrigated portion of the crop.
