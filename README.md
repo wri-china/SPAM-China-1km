@@ -2,7 +2,7 @@
 
 ## Overview
 This project generates the distribution of crop production at the provincial level in China from 2010 to 2022. It currently covers 17 types of crops, with plans to expand in the future. The final output provides detailed crop distribution based on various irrigation technologies.you can check the detail script through [github](https://github.com/wri-china/SPAM-China-1km) 
-
+we offer 2020 all 31 provincial level wheat's production under all technologies, download [here](https://china-data-team-bucket-public.s3.cn-northwest-1.amazonaws.com.cn/SPAM_crops/result/Prod_2020/Prod_2020.7z)
 ## Key Features
 - **Historical Data Analysis:** Covers crop distribution data from 2010 to 2022.
 - **Multiple Crop Types:** Supports 17 different crop types, with plans to add more.
@@ -45,7 +45,7 @@ For the different techologies's productions, we first caculate the ratio of 2010
 - `excel`: Folder to store Excel files. you can change through "dir_prodxls": "./excel/" in `InitialConfig.py`
 - `out`: Output folder for results.you can change through  "dir_output": "./out/" in `InitialConfig.py`
 - `shp`: Contains `SPAMChina1km` shapefiles for cliping study area. you can change through  "dir_provshp": "./shp/" in `InitialConfig.py`
-- `data`: Contains `SPAM` data, you can download from .you can change through  "dir_prodtif": "./data/spam2010v2r0_global_prod.geotiff/" in `InitialConfig.py`
+- `data`: Contains `SPAM` data, you can download from .you can change through  "dir_prodtif": "./data/spam2010v2r0_global_prod.geotiff/" in `InitialConfig.py`, you can download SPAM origin dataset from [AWS link](https://china-data-team-bucket-public.s3.cn-northwest-1.amazonaws.com.cn/SPAM_crops/data/spam2010v2r0_global_prod.geotiff.zip), you can download first,and unzip the file into ./data/
 
 
 ## Crop Types and Technologies
@@ -56,4 +56,5 @@ The script categorizes crop production based on different technologies:
 - `*_L`: Rainfed low inputs portion of the crop.
 - `*_S`: Rainfed subsistence portion of the crop.
 - `*_R`: Rainfed portion of the crop (equals `A - I`, or `H + L + S`).
+
 
