@@ -79,8 +79,8 @@ config["regions"] = {
 
 
 # Save the configuration to a file
-#with open("config.ini", "w") as configfile:
-#     config.write(configfile)
+with open("config.ini", "w") as configfile:
+     config.write(configfile)
      
 province = ['云南省','北京市','天津市','河北省',
  '山西省', '内蒙古自治区','辽宁省',
@@ -92,7 +92,7 @@ province = ['云南省','北京市','天津市','河北省',
  '重庆市', '四川省','贵州省',
  '西藏自治区', '陕西省', '甘肃省', '青海省',
  '宁夏回族自治区', '新疆维吾尔自治区']
-
+"""
 import subprocess
 import time
 
@@ -114,4 +114,4 @@ for pp in province:
     process = subprocess.Popen(['python', script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     time.sleep(25) 
    
-  
+"""

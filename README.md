@@ -2,7 +2,7 @@
 
 ## Overview
 This project generates the distribution of crop production at the provincial level in China from 2010 to 2022. It currently covers 17 types of crops, with plans to expand in the future. The final output provides detailed crop distribution based on various irrigation technologies.you can check the detail script through [github](https://github.com/wri-china/SPAM-China-1km) 
-we offer 2020 all 31 provincial level wheat's production under all technologies, download [here](https://china-data-team-bucket-public.s3.cn-northwest-1.amazonaws.com.cn/SPAM_crops/result/Prod_2020/Prod_2020.7z)
+we offer 2020 all 31 provincial level wheat's production under all technologies, download [here](https://china-data-team-bucket-public.s3.cn-northwest-1.amazonaws.com.cn/SPAM_crops/result/Prod_2020.7z)
 ## Key Features
 - **Historical Data Analysis:** Covers crop distribution data from 2010 to 2022.
 - **Multiple Crop Types:** Supports 17 different crop types, with plans to add more.
